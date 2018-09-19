@@ -7,8 +7,10 @@ const components={
   index:()=>import('../views/index/index'),
   user:()=>import('../views/user/user'),
   addUser:()=>import('../views/addUser/addUser'),
-  changeUser:()=>import('../views/changeUserInfo/changeUser')
-
+  changeUser:()=>import('../views/changeUserInfo/changeUser'),
+  categoryList:()=>import('../views/categoryList/categoryList'),
+  addCategory:()=>import('../views/addCategory/addCategory'),
+  detailCategory:()=>import('../views/detailCategory/detailCategory'),
 }
 
 export default new Router({
@@ -41,6 +43,18 @@ export default new Router({
         {
           path:'changeUser',
           component:components.changeUser
+        },
+        {
+          path:'categoryList',
+          component:components.categoryList
+        },
+        {
+          path:'addCategory',
+          component:components.addCategory
+        },
+        {
+          path:'detailCategory',
+          component:components.detailCategory
         },
 
       ]

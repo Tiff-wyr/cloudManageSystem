@@ -16,15 +16,7 @@
         <el-input v-model="formData.email"></el-input>
       </el-form-item>
       <el-form-item label="头像" prop="avatar">
-        <el-upload
-          class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-
-          :on-success="handleAvatarSuccess"
-          >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <imgUpload v-model="formData.avatar" @upload="getImg"></imgUpload>
       </el-form-item>
       <el-form-item label="昵称" prop="nickname">
         <el-input v-model="formData.nickname"></el-input>
@@ -40,10 +32,14 @@
 </template>
 
 <script>
+  import imgUpload from '../../package/imgUpload'
   import router from '../../router/index'
     export default {
-        name: "addUser",
-        data(){
+      name: "addUser",
+      components:{
+        imgUpload
+      },
+      data(){
           return {
             formData:{
               username:'',
@@ -79,13 +75,16 @@
             },
             imageUrl:'',
           }
-
         },
       methods:{
-          getAddUser(){
-              this.$axios.post('/user',this.formData).then(res=>{
-
-              if(res.code === 200){
+        getImg (res) {
+          this.formData.avatar = res
+        },
+        getAddUser(){
+            console.log(this.formData);
+            this.$axios.post('/user',this.formData).then(res=>{
+                console.log(res);
+                if(res.code === 200){
                 this.$message({
                   message:res.msg,
                   type:'success'
@@ -95,12 +94,7 @@
                 },1000)
               }
               })
-
           } ,
-
-        handleAvatarSuccess(res, file) {
-          this.imageUrl = URL.createObjectURL(file.raw);
-        },
         created(){
             this.getAddUser
         }
@@ -113,27 +107,7 @@
   margin-top: 30px;
   width: 600px;
 }
-.avatar-uploader .el-upload {
-  border: 3px dashed #ccc;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
 </style>
+
+
+

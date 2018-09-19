@@ -32,11 +32,13 @@
         methods:{
           handleLogin(){
             this.$axios.post('/login',this.formData).then(res=>{
+              console.log(res.data);
               if(res.code===200){
                 this.$message({
                   message:'登录成功',
                   type:'success'
                 })
+                sessionStorage.setItem('userinfo', JSON.stringify(res.data))
                 setTimeout(()=>{
                   router.push('/layout')
                 },1000)

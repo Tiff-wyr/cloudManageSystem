@@ -17,7 +17,7 @@ const xhr={
   },
   post(url,data,config,method='post'){
     return new Promise((resolve,reject)=>{
-      instance.post(url,data,config).then(res=>{
+      instance[method](url,data,config).then(res=>{
         resolve(res.data)
       }).catch(err=>{
         reject(err)

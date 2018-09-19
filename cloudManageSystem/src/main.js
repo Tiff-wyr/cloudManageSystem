@@ -7,9 +7,11 @@ import App from './App'
 import router from './router'
 import {$axios} from './utils/index'
 
+
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.prototype.$axios=$axios
+
 
 new Vue({
   el: '#app',
