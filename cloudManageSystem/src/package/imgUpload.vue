@@ -13,17 +13,19 @@
 
   export default {
     name: "imgUpload",
+    props: {
+      img: ''
+    },
     data() {
       return {
         token: '',
-        imgUrl: '',
+        imgUrl: this.img,
         isShow:true
       }
     },
     methods: {
       getToken() {
         axios.get('http://upload.yaojunrong.com/getToken').then(res => {
-          console.log(res.data.data)
           this.token=res.data.data
         })
       },
@@ -38,6 +40,14 @@
           this.imgUrl=res.data.url
           this.$emit('upload',this.imgUrl)
         })
+      }
+    },
+    watch: {
+      img (newvalue,oldvalue) {
+        this.imgUrl = newvalue
+        if (this.imgUrl !== '') {
+          this.isShow = false
+        }
       }
     },
     created(){
@@ -61,7 +71,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-
       }
     }
   }

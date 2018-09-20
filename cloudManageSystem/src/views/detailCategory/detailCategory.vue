@@ -7,44 +7,57 @@
     <el-breadcrumb-item :to="{path:'/layout/detailCategory'}">列表详情</el-breadcrumb-item>
   </el-breadcrumb>
   <!--列表详情-->
-  <el-table
-    :data="tableData"
-    stripe="true"
-    style="width: 100%">
-    <el-table-column
-      prop="title"
-      label="分类名称"
-      width="200">
-    </el-table-column>
-    <el-table-column
-      prop="icon"
-      label="分类图标"
-      width="200">
-      <template slot-scope="scope">
-        <img :src="scope.row.icon" class="icon">
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="index"
-      label="分类排序"
-      width="180"
-    >
-    </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button
-          size="mini" @click="edit">编辑
-        </el-button>
-        <el-button
-          size="mini" @click="detail">详情
-        </el-button>
-        <el-button
-          size="mini"
-          type="danger" @click="deleteRow(scope.row._id)">删除
-        </el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div class="detailCategory">
+    <el-table
+      :data="tableData"
+      stripe="true"
+      style="width: 100%">
+      <el-table-column
+        prop="title"
+        label="图书名称"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="img"
+        label="图书封面"
+        width="150">
+        <template slot-scope="scope">
+          <img :src="scope.row.img" class="icon">
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="author"
+        label="作者"
+        width="100"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="创建日期"
+        width="220">
+      </el-table-column>
+      <el-table-column
+        prop="index"
+        label="书籍排序"
+        width="100"
+      >
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini" @click="edit">生成轮播图
+          </el-button>
+          <el-button
+            size="mini" @click="detail">编辑
+          </el-button>
+          <el-button
+            size="mini"
+            type="danger" @click="deleteRow(scope.row._id)">删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </div>
 </template>
 
@@ -53,22 +66,32 @@
       name: "detailCategory",
       data(){
         return {
-
+          tableData:[]
         }
       },
       methods:{
         getData(id){
-          this.$axios.get(`/category/${id}/books`,)
+          this.$axios.get(`/category/${id}/books?pn=1&size=100`).then(res=>{
+            this.tableData=res.data.data.books
+          })
         }
       },
       created(){
-        this.getData()
+        let id = this.$route.params.id
+        this.getData(id)
       }
 
 
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .detailCategory{
+    margin-top: 30px;
+  }
+  .icon{
+    line-height: 50px;
+    width: 50px;
+    height: 50px;
+  }
 </style>

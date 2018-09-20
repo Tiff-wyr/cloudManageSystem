@@ -53,7 +53,7 @@ export default new Router({
           component:components.addCategory
         },
         {
-          path:'detailCategory',
+          path:'detailCategory/:id',
           component:components.detailCategory
         },
 

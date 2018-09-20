@@ -12,7 +12,7 @@
         <el-input v-model="formData.title"></el-input>
       </el-form-item>
       <el-form-item label="分类图标" prop="icon">
-        <imgUpload v-model="formData.icon" @upload="getImg"></imgUpload>
+        <imgUpload @upload="getImg"></imgUpload>
       </el-form-item>
       <el-form-item label="分类排序" prop="index">
         <el-input-number :min="1" :max="1000" v-model="formData.index" label="描述文字" >1</el-input-number>
