@@ -54,7 +54,7 @@
               <el-input v-model="formData.title"></el-input>
             </el-form-item>
             <el-form-item label="分类图标">
-              <imgUpload :img="formData.icon" @upload="getImg"></imgUpload>
+              <imgUpload v-model="formData.icon"></imgUpload>
             </el-form-item>
             <el-form-item label="分类排序" prop="index">
               <el-input-number :min="1" :max="1000" v-model="formData.index" label="描述文字" >1</el-input-number>
@@ -62,7 +62,7 @@
           </el-form>
           <div class="butt">
             <el-button @click="cancelCategory" type="primary">取消</el-button>
-            <el-button @save="saveCategory" type="primary">保存</el-button>
+            <el-button @click="saveCategory" type="primary">保存</el-button>
           </div>
 
         </div>
@@ -87,7 +87,9 @@
             isShow:false,
             this_id:'',
             formData:{
-              icon: '123'
+              title:'',
+              icon:'',
+              index:''
             }
           }
       },
@@ -96,12 +98,18 @@
           this.isShow=false
         },
         saveCategory(){
+          console.log(this.formData)
           this.$axios.put(`/category/${this.this_id}`,this.formData).then(res=>{
             console.log('修改',res);
+            if(res ===200){
+              this.$message.success('成功修改')
+            }
+            this.isShow=false;
+            this.getData();
+            this.this_id=''
           })
-          this.getData();
-          this.isShow=false;
-          this.this_id=''
+
+
         },
         getData() {
           this.$axios.get(`/category?pn=1&size=100`).then(res => {
@@ -113,11 +121,13 @@
         edit(obj){
           this.isShow=true
           this.formData = {...obj}
+          this.this_id=obj._id
+          console.log(this.formData)
         },
         detail(id){
           setTimeout(()=>{
             router.push(`/layout/detailCategory/${id}`)
-          },1000)
+          },500)
         },
         deleteRow(id) {
           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -142,8 +152,7 @@
               message: '已取消删除'
             });
           });
-        } ,
-        getImg () {}
+        }
       },
       created(){
           this.getData()

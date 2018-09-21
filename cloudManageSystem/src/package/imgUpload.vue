@@ -14,13 +14,13 @@
   export default {
     name: "imgUpload",
     props: {
-      img: ''
+      value: ''
     },
     data() {
       return {
         token: '',
-        imgUrl: this.img,
-        isShow:true
+        imgUrl: this.value,
+        isShow: true
       }
     },
     methods: {
@@ -38,12 +38,12 @@
         axios.post('https://upload-z1.qiniup.com',formData).then(res=>{
           this.isShow=false
           this.imgUrl=res.data.url
-          this.$emit('upload',this.imgUrl)
+          this.$emit('input',this.imgUrl)
         })
       }
     },
     watch: {
-      img (newvalue,oldvalue) {
+      value (newvalue,oldvalue) {
         this.imgUrl = newvalue
         if (this.imgUrl !== '') {
           this.isShow = false

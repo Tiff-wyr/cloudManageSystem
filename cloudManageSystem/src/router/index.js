@@ -11,6 +11,8 @@ const components={
   categoryList:()=>import('../views/categoryList/categoryList'),
   addCategory:()=>import('../views/addCategory/addCategory'),
   detailCategory:()=>import('../views/detailCategory/detailCategory'),
+  getViewpager:()=>import('../views/getViewpager/getViewpager'),
+  addViewpager:()=>import('../views/addViewpager/addViewpager'),
 }
 
 export default new Router({
@@ -55,6 +57,14 @@ export default new Router({
         {
           path:'detailCategory/:id',
           component:components.detailCategory
+        },
+        {
+          path:'getViewpager',
+          component:components.getViewpager
+        },
+        {
+          path:'addViewpager',
+          component:components.addViewpager
         },
 
       ]
